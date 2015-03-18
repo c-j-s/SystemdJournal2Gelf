@@ -8,3 +8,14 @@ install:
   - go get github.com/DECK36/go-gelf/gelf
 
 script: go build SystemdJournal2Gelf.go
+
+after_success: cat SystemdJournal2Gelf | gzip > SystemdJournal2Gelf-$(uname -m).gz
+
+deploy:
+  provider: releases
+  api_key:
+    secure: SA663jOiuWGv5MFAxMJfWBqDDHNwEpBxNXUvsHO1eadV5EB3ekPfQI6N95qQipVJIl8GxbYULnIqfT7rlDzoX9A8ylD5SvtC86PyxfZBk3ciIAN/wm9D9hNRJgwLDXSRRWjRhWuz2hb33EPT/+N5Pdzvn7WoJSJU6x9xOuAZjd0=
+  file: SystemdJournal2Gelf-$(uname -m).gz
+  on:
+    repo: nailgun/SystemdJournal2Gelf
+    tags: true
